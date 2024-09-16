@@ -18,4 +18,7 @@ async function getDatabses() {
   }
 }
 
-getDatabses();
+// getDatabses();
+// getUsers();
+// getUsersByID(1);
+module.exports = pool;
