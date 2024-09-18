@@ -14,7 +14,7 @@ app.use('/user', userRoute)
 
 // ===== BOILERPLATE CODE ===== 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World')
 })
 
 app.listen(port, () => {
