@@ -34,6 +34,9 @@ app.use('/exercise', exerciseRoute)
 const userRoute = require('./Routes/userRoute.js')
 app.use('/user', userRoute)
 
+const loginRoute = require('./Routes/loginRoute.js')
+app.use('/', loginRoute)
+
 // ===== BOILERPLATE CODE ===== 
 app.get('/', (req, res) => {
   res.send('Hello World')

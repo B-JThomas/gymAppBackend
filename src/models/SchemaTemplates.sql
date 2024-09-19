@@ -10,7 +10,6 @@ The file is structured as follows:
 
 - User Schemas (Line 24)
     - user
-    - user_login
     - user_roles
     - user_body_info
     - user_favourite_exercise
@@ -38,28 +37,18 @@ Please ensure to review and update the schema as the project evolves.
 
 -- USER
 CREATE TABLE `user` (
-    userId INT AUTO_INCREMENT PRIMARY KEY, 
-    username VARCHAR(255) NOT NULL UNIQUE, 
-    phoneNumber VARCHAR(15) UNIQUE, 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
-    FOREIGN KEY (role_id) REFERENCES `user_roles` (role_id) ON DELETE SET NULL;
+    userId INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    phoneNumber VARCHAR(15) UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    passwordHash VARCHAR(255) NOT NULL,
+    role_id INT DEFAULT 2,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES `user_roles` (role_id) ON DELETE SET NULL
 );
 
 INSERT INTO `user` (username, phoneNumber, role_id)
 VALUES ('Bailey', '0432521178', 1);
-
-
--- USER_LOGIN
-CREATE TABLE `user_login` (
-    userId INT PRIMARY KEY, 
-    email VARCHAR(255) NOT NULL UNIQUE, 
-    passwordHash VARCHAR(255) NOT NULL, 
-    FOREIGN KEY (userId) REFERENCES `user`(userId) ON DELETE CASCADE
-);
-
-INSERT INTO `user_login` (userId, email, passwordHash)
-VALUES (1, 'bailey.jthomas2@gmail.com', '!!Plumbie6158!!');
-
 
 -- USER_ROLES
 CREATE TABLE `user_roles` (
