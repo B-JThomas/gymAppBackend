@@ -23,6 +23,17 @@ async function getUsersByID(userId) {
     }
 }
 
+// Retrieve a specific user by userId
+async function getUsersByEmail(email) {
+    try {
+        const [rows] = await pool.query('SELECT * FROM `user` WHERE email = ?;', [email]);
+        return rows[0] || null; // Return null if no user found
+    } catch (error) {
+        console.error('Error querying the database:', error);
+        throw error;
+    }
+}
+
 // Retrieve a specific user by username
 async function getUserByUsername(username) {
     try {
@@ -128,6 +139,7 @@ async function deleteUser(userId) {
 module.exports = {
     getUsers,
     getUsersByID,
+    getUsersByEmail,
     getUserByUsername,
     createUser,
     updateUser,

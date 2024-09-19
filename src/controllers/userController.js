@@ -40,6 +40,20 @@ async function getUserById(req, res) {
   }
 }
 
+async function getUserByEmail(req, res) {
+  const { email } = req.params;
+  try {
+    const user = await userModel.getUsersByEmail(email);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user' });
+  }
+}
+
 async function createUser(req, res) {
   const { username, phoneNumber, email, password, role_id } = req.body;
   try {
@@ -87,6 +101,7 @@ async function deleteUserById(req, res) {
 module.exports = { 
   getUserByUsername,
   getAllUsers,
+  getUserByEmail,
   getUserById,
   createUser,
   updateUserById,

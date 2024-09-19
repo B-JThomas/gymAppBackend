@@ -1,4 +1,3 @@
-const userLoginModel = require('../models/userLoginModel');
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken'); 
@@ -8,7 +7,7 @@ async function authenticateUser(req, res) {
     const { email, password } = req.body;
 
     try {
-        const user = await userLoginModel.getUserByEmail(email);
+        const user = await userModel.getUsersByEmail(email);
         if (!user || !await bcrypt.compare(password, user.passwordHash)) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
@@ -29,20 +28,10 @@ async function registerUser(req, res) {
 
     try {
         //Force User Role to base
-        role_id = 2;
-        const userResult = await userModel.createUser({ username, phoneNumber, role_id });
-        
-        // Step 2: Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(`Controller userID: ${userResult.userId}`)
-        // Step 3: Create user login with the retrieved userId
-        const newUserLogin = await userLoginModel.createUserLogin({
-            userId: userResult.userId, 
-            email,
-            passwordHash: hashedPassword
-        });
+        let role_id = 2;
+        const userResult = await userModel.createUser({ email, password, username, phoneNumber, role_id });
 
-        res.status(201).json({ user: userResult, userLogin: newUserLogin });
+        res.status(201).json({ user: userResult });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user' });
@@ -53,15 +42,9 @@ async function registerUser(req, res) {
 async function updateUserLogin(req, res) {
     const userId = req.params.userId;
     const { email, password } = req.body;
-
     try {
-        if (email) {
-            await userLoginModel.updateUserEmail(userId, email);
-        }
-        if (password) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            await userLoginModel.updateUserPassword(userId, hashedPassword);
-        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await userModel.updateUser(userId, email, hashedPassword);
         res.status(200).json({ message: 'User login credentials updated' });
     } catch (error) {
         console.error('Error updating user login:', error);
@@ -74,7 +57,7 @@ async function deleteUserLogin(req, res) {
     const userId = req.params.userId;
 
     try {
-        const success = await userLoginModel.deleteUserLogin(userId);
+        const success = await userModel.deleteUser(userId);
         if (success) {
             res.status(200).json({ message: 'User login deleted' });
         } else {
