@@ -41,10 +41,10 @@ async function getUserById(req, res) {
 }
 
 async function createUser(req, res) {
-  const { username, phoneNumber } = req.body;
+  const { username, phoneNumber, role_id} = req.body;
   try {
     // Ensure all required fields are provided and valid
-    const newUser = await userModel.createUser({ username, phoneNumber });
+    const newUser = await userModel.createUser({ username, phoneNumber, role_id});
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: 'Error creating user' });
@@ -53,9 +53,9 @@ async function createUser(req, res) {
 
 async function updateUserById(req, res) {
   const { userId } = req.params;
-  const { username, phoneNumber } = req.body;
+  const { username, phoneNumber, role_id} = req.body;
   try {
-    const updatedUser = await userModel.updateUser(userId, { username, phoneNumber });
+    const updatedUser = await userModel.updateUser(userId, { username, phoneNumber, role_id});
     if (updatedUser) {
       res.status(200).json(updatedUser);
     } else {
