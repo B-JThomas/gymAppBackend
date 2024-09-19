@@ -31,10 +31,10 @@ module.exports = router;
 *    PUT /users/:userId: Update an existing user’s details (e.g., username, phone number).
 *    DELETE /users/:userId: Delete a user by userId.
 2. User Login Management (related to the user_login table)
-    POST /login: Authenticate a user (login using email and password).
-    POST /register: Register a new user (requires email, password, and links with the user table).
-    PUT /login/:userId: Update user login credentials (e.g., change email or password).
-    DELETE /login/:userId: Delete a user’s login (this might also delete the corresponding user).
+*    POST /login: Authenticate a user (login using email and password).
+*    POST /register: Register a new user (requires email, password, and links with the user table).
+*    PUT /login/:userId: Update user login credentials (e.g., change email or password).
+*    DELETE /login/:userId: Delete a user’s login (this might also delete the corresponding user).
 3. User Role Management (related to the user_roles table)
     GET /roles: Retrieve a list of all roles.
     GET /roles/:roleId: Retrieve details for a specific role by role_id.

@@ -28,14 +28,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // ====== ROUTING EXAMPLE ======
-const exerciseRoute = require('./Routes/exercise')
-app.use('/exercise', exerciseRoute)
+const loginRoute = require('./Routes/loginRoute.js')
+app.use('/', loginRoute)
 
 const userRoute = require('./Routes/userRoute.js')
 app.use('/user', userRoute)
 
-const loginRoute = require('./Routes/loginRoute.js')
-app.use('/', loginRoute)
+const userBodyInfoRoute = require('./Routes/userBodyInfoRoute.js')
+app.use('/body-info', userBodyInfoRoute)
+
+const exerciseRoute = require('./Routes/exercise')
+app.use('/exercise', exerciseRoute)
 
 // ===== BOILERPLATE CODE ===== 
 app.get('/', (req, res) => {
