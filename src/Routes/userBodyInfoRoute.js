@@ -6,7 +6,7 @@ const bodyInfoController = require('../controllers/userBodyInfoController');
 router.get('/:userId', bodyInfoController.getBodyInfo);
 
 // GET /body-info/current/:userId: Get lates record
-router.get('/current/:userId', bodyInfoController.getBodyInfoCurrent);
+router.get('/current/:userId', bodyInfoController.getCurrentBodyInfo);
 
 // POST /body-info: Add new body info for a user
 router.post('/', bodyInfoController.addBodyInfo);
