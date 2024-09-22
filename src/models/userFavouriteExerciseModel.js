@@ -1,4 +1,4 @@
-const pool = require('../config/database'); // Adjust path as per your setup
+const pool = require('../config/db'); // Adjust path as per your setup
 
 // Create a favourite exercise for a user
 async function createFavouriteExercise({ userId, exerciseID, favourite }) {
