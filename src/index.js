@@ -27,7 +27,8 @@ app.use(cors(corsOptions));
 // Json Parsing
 app.use(express.json());
 
-// ====== ROUTING EXAMPLE ======
+// ==================== ROUTES ====================
+// USER
 const loginRoute = require('./Routes/loginRoute.js')
 app.use('/', loginRoute)
 
@@ -37,6 +38,12 @@ app.use('/user', userRoute)
 const userBodyInfoRoute = require('./Routes/userBodyInfoRoute.js')
 app.use('/body-info', userBodyInfoRoute)
 
+const userFavouriteExerciseRoute = require('./Routes/userFavouriteExerciseRoute.js')
+app.use('/favourite-exercise', userFavouriteExerciseRoute)
+
+
+
+// EXERCISE
 const exerciseRoute = require('./Routes/exercise')
 app.use('/exercise', exerciseRoute)
 
