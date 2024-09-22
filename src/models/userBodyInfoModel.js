@@ -17,10 +17,27 @@ async function getBodyInfoByUserId(userId) {
 }
 
 // Update body info
-async function updateBodyInfo(userId, recordId, bodyInfoUpdates) {
+async function updateBodyInfo(recordId, bodyInfoUpdates) {
+    // Filter out `null` or `undefined` values from the updates
+    const updates = Object.entries(bodyInfoUpdates).reduce((acc, [key, value]) => {
+        if (value !== null && value !== undefined) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+
+    if (Object.keys(updates).length === 0) {
+        // No valid updates to make
+        return null;
+    }
+
+    // Build the SET clause dynamically
+    const setClause = Object.keys(updates).map(key => `${key} = ?`).join(', ');
+    const values = [...Object.values(updates), recordId];
+
     const [result] = await pool.query(
-        'UPDATE `user_body_info` SET ? WHERE userID = ? AND recordID = ?',
-        [bodyInfoUpdates, userId, recordId]
+        `UPDATE \`user_body_info\` SET ${setClause} WHERE recordID = ?`,
+        values
     );
     return result.affectedRows > 0 ? bodyInfoUpdates : null;
 }
@@ -34,8 +51,8 @@ async function getCurrentBodyInfoByUserId(userId) {
 }
 
 // Delete body info
-async function deleteBodyInfo(userId, recordId) {
-    const [result] = await pool.query('DELETE FROM `user_body_info` WHERE userID = ? AND recordID = ?', [userId, recordId]);
+async function deleteBodyInfo(recordId) {
+    const [result] = await pool.query('DELETE FROM `user_body_info` WHERE recordID = ?', [recordId]);
     return result.affectedRows > 0;
 }
 

@@ -63,7 +63,7 @@ VALUES ('Admin'), ('User'), ('Moderator');
 -- USER_BODY_INFO
 CREATE TABLE `user_body_info` (
     userID INT NOT NULL,
-    recordID INT NOT NULL,
+    recordID INT NOT NULL AUTO_INCREMENT,
     gender VARCHAR(10),
     height DECIMAL(5, 2),
     weight DECIMAL(5, 2),
@@ -78,7 +78,8 @@ CREATE TABLE `user_body_info` (
     waist DECIMAL(5, 2),
     neck DECIMAL(5, 2),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY (userID, recordID),
+    PRIMARY KEY (recordID),
+    ADD UNIQUE KEY (`userID`, `recordID`),
     FOREIGN KEY (userID) REFERENCES `user`(userId) ON DELETE CASCADE
 );
 

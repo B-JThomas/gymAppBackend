@@ -38,40 +38,7 @@ async function registerUser(req, res) {
     }
 }
 
-// PUT /login/:userId: Update user login credentials
-async function updateUserLogin(req, res) {
-    const userId = req.params.userId;
-    const { email, password } = req.body;
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await userModel.updateUser(userId, email, hashedPassword);
-        res.status(200).json({ message: 'User login credentials updated' });
-    } catch (error) {
-        console.error('Error updating user login:', error);
-        res.status(500).json({ message: 'Error updating user login' });
-    }
-}
-
-// DELETE /login/:userId: Delete a user’s login
-async function deleteUserLogin(req, res) {
-    const userId = req.params.userId;
-
-    try {
-        const success = await userModel.deleteUser(userId);
-        if (success) {
-            res.status(200).json({ message: 'User login deleted' });
-        } else {
-            res.status(404).json({ message: 'User login not found' });
-        }
-    } catch (error) {
-        console.error('Error deleting user login:', error);
-        res.status(500).json({ message: 'Error deleting user login' });
-    }
-}
-
 module.exports = {
     authenticateUser,
     registerUser,
-    updateUserLogin,
-    deleteUserLogin
 };
